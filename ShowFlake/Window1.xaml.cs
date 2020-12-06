@@ -9,6 +9,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ShowFlake
 {
@@ -17,9 +19,15 @@ namespace ShowFlake
     /// </summary>
     public partial class SF : Window
     {
-        public SF()
+        
+        public void Start() =>  this.move.Add(this);
+
+        public IMove move {private set; get; }
+        public SF(IMove move)
         {
-            InitializeComponent();
+            this.move = move;
+            this.Start();
+           
         }
     }
 }

@@ -10,14 +10,22 @@ namespace ShowFlake
     {
         public void Start(int count)
         {
-            Thread thread = new Thread(() =>
+            for (int i = 0; i < count; i++)
             {
-                var sf = new SF();//WPF окно
+                Thread thread = new Thread(() =>
+                {
+                    Thread.CurrentThread.SetApartmentState(ApartmentState.STA);
+                    var sf = new SF(new MoveShowflake());//WPF окно
+                    sf.InitializeComponent();
                     sf.ShowDialog();
-            });
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
+                });
+                thread.SetApartmentState(ApartmentState.STA);
+                thread.Start();
+                MoveShowflake.Run();
+            }
+
         }
+
 
         public Work()
         {

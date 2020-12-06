@@ -27,7 +27,7 @@ namespace ShowFlake
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new Work(Enumerable.Repeat(new SF(), 10).ToList()).Start();
+            new Work().Start(6);
         }
     }
 }
