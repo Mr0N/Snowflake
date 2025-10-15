@@ -27,7 +27,12 @@ namespace ShowFlake
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new Work().Start(6);
+            Task.Run(async() =>
+            {
+               await new ShowflakeMain().ShowSnowflake(12);
+
+            });
+              
         }
     }
 }

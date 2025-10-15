@@ -17,17 +17,20 @@ namespace ShowFlake
     /// <summary>
     /// Логика взаимодействия для Window1.xaml
     /// </summary>
-    public partial class SF : Window
+    public partial class LogicaExecuteWindows1 : Window
     {
-        
-        public void Start() =>  this.move.Add(this);
 
-        public IMove move {private set; get; }
-        public SF(IMove move)
+        public void Start()
+        {
+            this.move.Add(this);
+        }
+
+        public IMove move { private set; get; }
+        public LogicaExecuteWindows1(IMove move)
         {
             this.move = move;
             this.Start();
-           
+
         }
     }
 }

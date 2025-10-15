@@ -9,46 +9,44 @@ namespace ShowFlake
 {
     class MoveShowflake : IMove
     {
-        readonly static List<Window> windowLs;
+        readonly static List<Window> _listWindows;
         static MoveShowflake()
         {
-            if (windowLs == null) 
-                windowLs = new List<Window>();
+            if (_listWindows == null) 
+                _listWindows = new List<Window>();
             if (random == null) random = new Random();
         }
        
         public void Add(Window window)
         {
-            windowLs.Add(window);
+            _listWindows.Add(window);
         }
-        public static void Run()
+        public static async Task Run()
         {
-           
-            Task task = new Task(() => Worker());
-            task.Start();
+            await Worker();
         }
         static Random random;
-        private static void Worker()
+        private static async Task Worker()
         {
-            windowLs.ForEach(x => x.Dispatcher.Invoke(()=> Initialization(x)));
+            _listWindows.ForEach(window => window.Dispatcher.Invoke(()=> BeginSettings(window)));
             while (true)
             {
-                windowLs.ForEach(x =>
+                _listWindows.ForEach(window =>
                 {
-                    x.Dispatcher.Invoke(() =>
+                    window.Dispatcher.Invoke(() =>
                     {
-                        Logica(x);
+                        LogicaChangePositionWindow(window);
                     });
                 });
-                Thread.Sleep(40);
+                await Task.Delay(10);
             }
         }
         static int count = 0;
-        static void Initialization(Window wind)
+        static void BeginSettings(Window window)
         {
-            wind.Left = random.Next(0, Convert.ToInt32(SystemParameters.PrimaryScreenWidth));
+            window.Left = random.Next(0, Convert.ToInt32(SystemParameters.PrimaryScreenWidth));
         }
-        private static void Logica(Window window)
+        private static void LogicaChangePositionWindow(Window window)
         {
             count++;
             if (SystemParameters.PrimaryScreenHeight < window.Top) window.Top = 0;
