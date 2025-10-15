@@ -8,5 +8,5 @@
         WindowStyle="None"
         AllowsTransparency="true"
         Title="MainWindow" Height="120" Width="160" Background="Transparent">
-    <Image Margin="-6,-1,-9,-3" Source="/Без названия.png" RenderTransformOrigin="0.566,0.472"/>
+    <Image  x:Name="SnowflakeImage" Margin="-6,-1,-9,-3" Source="/Без названия.png" RenderTransformOrigin="0.566,0.472"/>
 </Window>
