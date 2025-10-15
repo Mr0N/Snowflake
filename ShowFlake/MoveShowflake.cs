@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
@@ -9,17 +10,18 @@ namespace ShowFlake
 {
     class MoveShowflake : IMove
     {
-        readonly static List<Window> _listWindows;
+        readonly static ConcurrentBag<Window> _listWindows;
         static MoveShowflake()
         {
             if (_listWindows == null) 
-                _listWindows = new List<Window>();
+                _listWindows = new ConcurrentBag<Window>();
             if (random == null) random = new Random();
         }
-       
+        static object objLock = new object();
         public void Add(Window window)
         {
-            _listWindows.Add(window);
+            lock(objLock)
+                _listWindows.Add(window);
         }
         public static async Task Run()
         {
@@ -28,16 +30,21 @@ namespace ShowFlake
         static Random random;
         private static async Task Worker()
         {
-            _listWindows.ForEach(window => window.Dispatcher.Invoke(()=> BeginSettings(window)));
+            //_listWindows.ForEach(window => );
+            foreach (var window in _listWindows)
+            {
+                window.Dispatcher.Invoke(() => BeginSettings(window));
+            }
+            
             while (true)
             {
-                _listWindows.ForEach(window =>
+                foreach (var window in _listWindows)
                 {
                     window.Dispatcher.Invoke(() =>
                     {
                         LogicaChangePositionWindow(window);
                     });
-                });
+                }
                 await Task.Delay(10);
             }
         }

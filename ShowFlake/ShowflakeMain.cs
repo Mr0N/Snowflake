@@ -23,9 +23,16 @@ namespace ShowFlake
                 thread.SetApartmentState(ApartmentState.STA);
                 thread.IsBackground = true;
                 thread.Start();
+               
             }
-            await MoveShowflake.Run();
-
+            try
+            {
+                await MoveShowflake.Run();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
