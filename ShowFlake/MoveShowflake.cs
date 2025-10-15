@@ -56,8 +56,8 @@ namespace ShowFlake
             if (count > 15)
             {
                 if (random.Next(0, 10) == 1)
-                    window.Left += 2;
-                else window.Left -= 3;
+                    window.Left += 1;
+                else window.Left -= 1;
                 count = 0;
             }
         }
